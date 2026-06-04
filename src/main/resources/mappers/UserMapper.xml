@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.user.mapper.UserMapper">
+
+    <resultMap id="userResultMap" type="org.example.user.entity.User">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <!-- 전체 조회 -->
+    <select id="findAll" resultMap="userResultMap">
+        SELECT * FROM `user`
+    </select>
+
+    <insert id="save" parameterType="org.example.user.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `user` (user_id, name, password) VALUES (#{userId}, #{name}, #{password})
+    </insert>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

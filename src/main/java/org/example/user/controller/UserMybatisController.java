@@ -3,13 +3,15 @@ package org.example.user.controller;
 import org.example.user.dto.UserCreateRequest;
 import org.example.user.dto.UserResponse;
 import org.example.user.entity.User;
+import org.example.user.service.UserMybatisService;
 import org.example.user.service.UserService;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class UserController {
+public class UserMybatisController {
     private static final UserService userService = new UserService();
+    private static final UserMybatisService userMybatisService = new UserMybatisService();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -28,7 +30,7 @@ public class UserController {
 
             if (choice == 1) {
                 // 1. 회원 목록 조회
-                List<UserResponse> users = userService.getAllUsers();
+                List<UserResponse> users = userMybatisService.getAllUsers();
 
                 for (UserResponse user : users) {
                     System.out.println(user);
@@ -47,7 +49,7 @@ public class UserController {
                 newUser.setName(name);
                 newUser.setPassword(password);
 
-                int affectedRow = userService.addUser(newUser);
+                int affectedRow = userMybatisService.addUser(newUser);
                 System.out.println("추가된 회원 수 : " + affectedRow);
             } else if (choice == 3) {
                 // 3. 특정 이름 검색

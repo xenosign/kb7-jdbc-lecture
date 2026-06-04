@@ -3,17 +3,19 @@ package org.example.user.service;
 import org.example.user.dto.UserCreateRequest;
 import org.example.user.dto.UserResponse;
 import org.example.user.entity.User;
+import org.example.user.repository.UserMybatisRepository;
 import org.example.user.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserService {
+public class UserMybatisService {
     private final UserRepository userRepository = new UserRepository();
+    private final UserMybatisRepository userMybatisRepository = new UserMybatisRepository();
 
     public List<UserResponse> getAllUsers() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userMybatisRepository.findAll();
         List<UserResponse> result = new ArrayList<>();
 
         for (User user : users) {
@@ -34,7 +36,7 @@ public class UserService {
         user.setName(request.getName());
         user.setPassword(request.getPassword());
 
-        return userRepository.save(user);
+        return userMybatisRepository.save(user);
     }
 
     public List<User> searchByName(String name) {
