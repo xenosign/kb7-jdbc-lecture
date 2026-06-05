@@ -3,15 +3,15 @@ package org.example.user.controller;
 import org.example.user.dto.UserCreateRequest;
 import org.example.user.dto.UserResponse;
 import org.example.user.entity.User;
-import org.example.user.service.UserMybatisService;
+import org.example.user.service.UserMongoService;
 import org.example.user.service.UserService;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class UserMybatisController {
+public class UserMongoController {
     private static final UserService userService = new UserService();
-    private static final UserMybatisService userMybatisService = new UserMybatisService();
+    private static final UserMongoService userMongoService = new UserMongoService();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -30,7 +30,7 @@ public class UserMybatisController {
 
             if (choice == 1) {
                 // 1. 회원 목록 조회
-                List<UserResponse> users = userMybatisService.getAllUsers();
+                List<UserResponse> users = userMongoService.getAllUsers();
 
                 for (UserResponse user : users) {
                     System.out.println(user);
@@ -49,14 +49,14 @@ public class UserMybatisController {
                 newUser.setName(name);
                 newUser.setPassword(password);
 
-                int affectedRow = userMybatisService.addUser(newUser);
+                int affectedRow = userService.addUser(newUser);
                 System.out.println("추가된 회원 수 : " + affectedRow);
             } else if (choice == 3) {
                 // 3. 특정 이름 검색
                 System.out.print("검색 할 이름 : ");
                 String name = scanner.nextLine();
 
-                List<User> result = userMybatisService.searchByName(name);
+                List<User> result = userService.searchByName(name);
                 for (User user : result) {
                     System.out.println(user);
                 }
@@ -65,7 +65,7 @@ public class UserMybatisController {
                 System.out.print("삭제할 회원의 id(PK): ");
                 int id = scanner.nextInt();
 
-                userMybatisService.deleteUserById(id);
+                userService.deleteUserById(id);
             } else if (choice == 5) {
                 // 5. 회원 수정
                 System.out.print("수정할 회원의 ID(PK): ");
@@ -84,7 +84,7 @@ public class UserMybatisController {
                 updateUser.setName(newName);
                 updateUser.setPassword(newPassword);
 
-                userMybatisService.updateUser(updateUser);
+                userService.updateUser(updateUser);
             } else if (choice == 6) {
                 System.out.println("프로그램을 종료 합니다");
                 break;

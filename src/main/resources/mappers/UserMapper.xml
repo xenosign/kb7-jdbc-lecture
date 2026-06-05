@@ -20,7 +20,15 @@
         INSERT INTO `user` (user_id, name, password) VALUES (#{userId}, #{name}, #{password})
     </insert>
 
+    <!-- 수정 -->
+    <update id="update" parameterType="org.example.user.entity.User">
+        UPDATE `user` SET user_id = #{userId}, name = #{name}, password = #{password} WHERE id = #{id}
+    </update>
 
+    <!-- 삭제 -->
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM `user` WHERE id = #{id}
+    </delete>
 
 
 

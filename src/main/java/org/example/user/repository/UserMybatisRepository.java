@@ -29,36 +29,23 @@ public class UserMybatisRepository {
         }
     }
 
-    public int deleteById(int id) {
-        String sql = "DELETE FROM `user` WHERE id = ?";
-
-        try (Connection conn = JDBCUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, id);
-            return pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // 수정
+    public int update(User user) {
+        try (SqlSession session = MybatisConfig.getSqlSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            int result = mapper.update(user);
+            session.commit();
+            return result;
         }
-
-        return -1;
     }
 
-    public int update(User user) {
-        String sql = "UPDATE `user` SET user_id = ?, name = ?, password = ? WHERE id = ?";
-
-        try (Connection conn = JDBCUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, user.getUserId());
-            pstmt.setString(2, user.getName());
-            pstmt.setString(3, user.getPassword());
-            pstmt.setInt(4, user.getId());
-            return pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // 삭제
+    public int deleteById(int id) {
+        try (SqlSession session = MybatisConfig.getSqlSession()) {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            int result = mapper.deleteById(id);
+            session.commit();
+            return result;
         }
-
-        return 0;
     }
 }
